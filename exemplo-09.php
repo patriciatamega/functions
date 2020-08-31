@@ -34,8 +34,22 @@ $hierarquia = array(
                     )
                     //Término: Supervisor de Pagamentos
                 )
-              )
+                    ),
             //Término: Gerente de Contas a Pagar
+
+
+            //Início: Gerente de Compras
+            array(
+              'nome_cargo'=>'Gerente de Compras',
+              'subordinados'=>array(
+                  //Início: Supervisor de Suprimentos
+                  array(
+                    'nome_cargo'=>'Supervisor de Suprimentos'
+                  )
+                  //Término: Supervisor de Suprimentos
+              )
+                  ),
+          //Término: Gerente de Compras
           )
 
         )
@@ -43,5 +57,32 @@ $hierarquia = array(
     )
   )
 );
+
+function exibe($cargos){
+
+  $html = '<ul>';
+
+  foreach ($cargos as $cargo) {
+
+    $html .= "<li>";
+
+    $html .= $cargo['nome_cargo'];
+
+    if (isset($cargo['subordinados']) && count($cargo['subordinados']) > 0) {
+
+      $html .= exibe($cargo['subordinados']);
+
+    }
+
+
+  }
+
+  $html .= "</ul>";
+
+  return $html;
+
+}
+
+echo exibe($hierarquia);
 
 ?>
